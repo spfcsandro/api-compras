@@ -31,10 +31,8 @@ public class Cupom implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_desconto")
 	private TipoDesconto tipoDesconto;
-	@Temporal(TemporalType.DATE)
 	@Column(name = "data_inicial")
 	private LocalDate dataInicial;
-	@Temporal(TemporalType.DATE)
 	@Column(name = "data_final")
 	private LocalDate dataFinal;
 }

@@ -1,5 +1,6 @@
 package com.compras.service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import com.compras.model.Usuario;
 import com.compras.repository.UsuarioRepository;
 import com.compras.util.HashUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UsuarioService {
 
-	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private final UsuarioRepository usuarioRepository;
 	
 	public Page<Usuario> listarUsuarios(Pageable pageable){
 		return usuarioRepository.findAll(pageable);

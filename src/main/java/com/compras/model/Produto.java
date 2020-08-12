@@ -2,7 +2,6 @@ package com.compras.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -16,7 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 @Entity
@@ -31,9 +35,6 @@ public class Produto implements Serializable{
 	private String descricao;
 	private Integer quantidade;
 	private BigDecimal valor;
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "data_criacao")
-	private LocalDateTime dataCriacao;
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;
