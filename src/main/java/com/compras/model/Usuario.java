@@ -35,6 +35,7 @@ public class Usuario implements Serializable{
 	private String nome;
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	@Email
+	@Column(unique = true)
 	private String email;
 	@Getter(onMethod = @__({@JsonIgnore}))
 	@Setter(onMethod = @__({@JsonProperty}))

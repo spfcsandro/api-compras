@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -23,18 +24,14 @@ public class Carrinho implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String codigo;
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario cliente;
 	@OneToMany(mappedBy = "carrinho")
 	private Set<ItemCarrinho> itens = new HashSet<>();
 	
-	public double getValorTotal() {
-		double soma = 0.0;
-		for (ItemCarrinho item : itens) {
-			soma += item.getSubTotal();
-		}
-		return soma;
-	}
+	/*
+	 * public double getValorTotal() { double soma = 0.0; for (ItemCarrinho item :
+	 * itens) { soma += item.getSubTotal(); } return soma; }
+	 */
 }

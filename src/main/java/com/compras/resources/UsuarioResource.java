@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.compras.dto.UsuarioClienteDTO;
+import com.compras.dto.UsuarioLoginDTO;
 import com.compras.model.Usuario;
+import com.compras.service.CarrinhoService;
 import com.compras.service.UsuarioService;
+import com.compras.util.HashUtil;
 
 @RestController
 @RequestMapping("/v1/usuarios")
@@ -26,6 +29,8 @@ public class UsuarioResource {
 	
 	@Autowired
 	UsuarioService usuarioService;
+	@Autowired
+	CarrinhoService carrinhoService;
 	
 	@PostMapping
 	public ResponseEntity<Usuario> salvarUsuario(@Valid @RequestBody Usuario usuario){
@@ -60,9 +65,16 @@ public class UsuarioResource {
 	}
 	
 	@PostMapping("/cadastrar-cliente")
-	public ResponseEntity<Usuario> login(@Valid @RequestBody UsuarioClienteDTO usuario){
+	public ResponseEntity<Usuario> cadastrarCliente(@Valid @RequestBody UsuarioClienteDTO usuario){
 		Usuario usuarioCadastrado = usuarioService.cadastrarCliente(usuario);
+		carrinhoService.cadastrarCarrinhoCliente(usuarioCadastrado);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCadastrado);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<String> login(@RequestBody @Valid UsuarioLoginDTO usuarioLoginDTO){
+		String token = usuarioService.autenticar(usuarioLoginDTO.getEmail(), usuarioLoginDTO.getSenha());
+		return ResponseEntity.ok(token);
 	}
 	
 }

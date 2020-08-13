@@ -21,10 +21,17 @@ public class CarrinhoResource {
 	@Autowired
 	CarrinhoService carrinhoService;
 	
-	@PostMapping
-	public ResponseEntity<Produto> adicionarProduto(@Valid @RequestBody Produto produto, String codigoCupom){
-		Produto produtoAdicionado = carrinhoService.adicionarProduto(produto, codigoCupom);
+	@PostMapping("/adicionar-produto")
+	public ResponseEntity<Produto> adicionarProduto(@Valid @RequestBody Produto produto){
+		Produto produtoAdicionado = carrinhoService.adicionarProduto(produto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(produtoAdicionado);
+	}
+	
+	@PostMapping("/adicionar-cupom")
+	public ResponseEntity<Produto> adicionarCupom(String codigoCupom){
+		//Produto produtoAdicionado = carrinhoService.adicionarCupom(codigoCupom);
+		//return ResponseEntity.status(HttpStatus.CREATED).body(produtoAdicionado);
+		return null;
 	}
 	
 }

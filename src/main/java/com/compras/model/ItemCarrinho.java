@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import lombok.Data;
 
@@ -24,15 +23,15 @@ public class ItemCarrinho implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_carrinho", nullable = false)
 	private Carrinho carrinho;
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
 	private Integer quantidade;
 	private Double preco;
 	private Double desconto;
 	
-	public double getSubTotal(){
-		return (preco - desconto) * quantidade;
-	}
+	/*
+	 * public double getSubTotal(){ return (preco - desconto) * quantidade; }
+	 */
 	
 }
