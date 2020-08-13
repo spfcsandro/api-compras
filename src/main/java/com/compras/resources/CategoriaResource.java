@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import com.compras.model.Categoria;
 import com.compras.service.CategoriaService;
 
 @RestController
-@RequestMapping("/v1/categorias/")
+@RequestMapping("/v1/categorias")
 public class CategoriaResource {
 
 	@Autowired
@@ -49,5 +50,10 @@ public class CategoriaResource {
 	public ResponseEntity<Page<Categoria>> listarCategorias(Pageable pageable){
 		Page<Categoria> categorias = categoriaService.listarCategorias(pageable);
 		return ResponseEntity.ok(categorias);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deletarCategoria(@PathVariable(name = "id") Long id){
+		categoriaService.deletarCategoria(id);
 	}
 }

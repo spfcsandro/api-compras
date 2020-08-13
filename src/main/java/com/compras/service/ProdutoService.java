@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.compras.exception.NotFoundException;
+import com.compras.model.Categoria;
 import com.compras.model.Produto;
 import com.compras.repository.ProdutoRepository;
 
@@ -23,7 +25,8 @@ public class ProdutoService {
 	}
 	
 	public Produto carregarProduto (Long id){
-		return produtoRepository.findById(id).get();
+		Optional<Produto> produto = produtoRepository.findById(id);
+		return produto.orElseThrow(() -> new NotFoundException("Objeto não encontrado"));
 	}
 	
 	public Produto salvarProduto(Produto produto) {

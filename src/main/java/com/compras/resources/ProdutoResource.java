@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import com.compras.model.Produto;
 import com.compras.service.ProdutoService;
 
 @RestController
-@RequestMapping("/v1/produtos/")
+@RequestMapping("/v1/produtos")
 public class ProdutoResource {
 
 	@Autowired
@@ -49,5 +50,10 @@ public class ProdutoResource {
 	public ResponseEntity<Page<Produto>> listarProdutos(Pageable pageable){
 		Page<Produto> produtos = produtoService.listarProdutos(pageable);
 		return ResponseEntity.ok(produtos);
+	}
+	
+	@DeleteMapping("/{id}")
+	public void deletarProduto(@PathVariable(name = "id") Long id){
+		produtoService.deletarProduto(id);
 	}
 }

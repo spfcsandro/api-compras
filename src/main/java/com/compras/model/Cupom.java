@@ -1,7 +1,6 @@
 package com.compras.model;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +9,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.compras.enums.TipoDesconto;
 
@@ -26,13 +25,13 @@ public class Cupom implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String codigo;
+	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String descricao;
 	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_desconto")
+	@Column(name = "tipo_desconto", nullable = false)
+	@NotNull(message = "{campo.validacao.vazio}")
 	private TipoDesconto tipoDesconto;
-	@Column(name = "data_inicial")
-	private LocalDate dataInicial;
-	@Column(name = "data_final")
-	private LocalDate dataFinal;
+	private Double desconto;
 }

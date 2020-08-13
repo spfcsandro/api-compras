@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.compras.exception.NotFoundException;
 import com.compras.model.Categoria;
 import com.compras.repository.CategoriaRepository;
 
@@ -23,7 +24,8 @@ public class CategoriaService {
 	}
 	
 	public Categoria carregarCategoria (Long id){
-		return categoriaRepository.findById(id).get();
+		Optional<Categoria> categoria = categoriaRepository.findById(id);
+		return categoria.orElseThrow(() -> new NotFoundException("Objeto não encontrado"));
 	}
 	
 	public Categoria salvarCategoria(Categoria categoria) {
