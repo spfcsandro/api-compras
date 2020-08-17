@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import com.compras.config.JwtManager;
 import com.compras.dto.UsuarioClienteDTO;
+import com.compras.dto.UsuarioLoginResponseDTO;
 import com.compras.enums.ROLE;
 import com.compras.exception.NotFoundException;
 import com.compras.model.Usuario;
@@ -89,7 +90,7 @@ public class UsuarioService implements UserDetailsService{
 		return userDetails;
 	}
 
-	public String autenticar(String username, String senha) {
+	public UsuarioLoginResponseDTO autenticar(String username, String senha) {
 		UsernamePasswordAuthenticationToken userAtuth = new UsernamePasswordAuthenticationToken(username, senha);
 		Authentication auth = authManager.authenticate(userAtuth);
 		SecurityContextHolder.getContext().setAuthentication(auth);
@@ -101,8 +102,8 @@ public class UsuarioService implements UserDetailsService{
 									.map(authority ->  authority.getAuthority())
 									.collect(Collectors.toList());
 		
-		String token = jwtManager.createToken(email, roles);
+		UsuarioLoginResponseDTO usuarioLoginResponseDTO = jwtManager.createToken(email, roles);
 		
-		return token;
+		return usuarioLoginResponseDTO;
 	}
 }

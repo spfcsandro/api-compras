@@ -33,5 +33,6 @@ public class Cupom implements Serializable {
 	@Column(name = "tipo_desconto", nullable = false)
 	@NotNull(message = "{campo.validacao.vazio}")
 	private TipoDesconto tipoDesconto;
+//	private boolean isCumulativo;
 	private Double desconto;
 }

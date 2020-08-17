@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -33,5 +34,12 @@ public class ResourceExceptionHandler {
 		
 		Erro erro = new Erro(HttpStatus.BAD_REQUEST.value(), dataInteg.getMessage(), System.currentTimeMillis());
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+	}
+	
+	@ExceptionHandler(BadCredentialsException.class)
+	public ResponseEntity<Erro> dataIntegrity(BadCredentialsException badCred, HttpServletRequest request) {
+		
+		Erro erro = new Erro(HttpStatus.UNAUTHORIZED.value(), badCred.getMessage(), System.currentTimeMillis());
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(erro);
 	}
 }

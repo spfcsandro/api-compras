@@ -28,10 +28,18 @@ public class ItemCarrinho implements Serializable{
 	private Produto produto;
 	private Integer quantidade;
 	private Double preco;
-	private Double desconto;
 	
-	/*
-	 * public double getSubTotal(){ return (preco - desconto) * quantidade; }
+/*	public double getSubTotal(){ 
+		 return (preco - desconto) * quantidade; 
+	}
+	*/
+/*	private void descontos(ItemCarrinho item) {
+		if(!ObjectUtil.isObjectNull(item.getProduto().getCategoria()) &&
+				ListaUtil.possuiItens(item.getProduto().getCategoria().getCupons())){
+			
+			
+		}
+	}
 	 */
 	
 }

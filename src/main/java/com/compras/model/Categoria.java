@@ -1,21 +1,18 @@
 package com.compras.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 
-import com.compras.enums.TipoDesconto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -33,13 +30,14 @@ public class Categoria implements Serializable {
 	private String codigo;
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String descricao;
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tipo_desconto")
-	private TipoDesconto tipoDesconto;
-	private BigDecimal desconto;
-	
-	@JsonIgnore
-	@ManyToMany(mappedBy = "categorias")
+	/*@JsonIgnore
+	@OneToMany(mappedBy = "categoria")
 	private List<Produto> produtos = new ArrayList<>();
-
+	 */
+	
+	@ManyToMany
+	@JoinTable(name = "categoria_cupom", 
+		joinColumns = @JoinColumn(name = "id_categoria"),
+		inverseJoinColumns = @JoinColumn(name = "id_cupom"))
+	private List<Cupom> cupons = new ArrayList<>();
 }

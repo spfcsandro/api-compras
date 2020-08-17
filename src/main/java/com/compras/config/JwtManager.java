@@ -1,32 +1,50 @@
 package com.compras.config;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
 import com.compras.constant.SecurityConstant;
+import com.compras.dto.UsuarioLoginResponseDTO;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtManager {
 
-	public String createToken(String email, List<String> roles) {
+	public UsuarioLoginResponseDTO createToken(String email, List<String> roles) {
 		
-		Date dateExp = Date.from(LocalDateTime.now()
-				 .atZone(ZoneId.systemDefault()).plusDays(SecurityConstant.JWT_EXP_DAYS).toInstant());
+	/*	Date dateExp = Date.from(LocalDateTime.now()
+				 .atZone(ZoneId.systemDefault()).plusDays(SecurityConstant.JWT_EXP_DAYS).toInstant());*/
+		
+		Instant now = Instant.now();
+		Date dateExp = Date.from(now.plus(SecurityConstant.JWT_EXP_DAYS, ChronoUnit.DAYS));
 		
 		String token = Jwts.builder()
 						 .setSubject(email)
 						 .setExpiration(dateExp)
 						 .claim(SecurityConstant.JWT_ROLE_KEY, roles)
-						 .signWith(SignatureAlgorithm.HS512, SecurityConstant.API_KEY)
+						 .signWith(SignatureAlgorithm.HS512, SecurityConstant.API_KEY.getBytes())
 						 .compact();
-		return token;
+		
+		
+		return new UsuarioLoginResponseDTO(token, dateExp.getTime(), SecurityConstant.JWT_PROVIDER);
+	}
+	
+	public Claims parseToken(String jwt) throws JwtException {
+		Claims claims = Jwts.parser()
+							.setSigningKey(SecurityConstant.API_KEY.getBytes())
+							.parseClaimsJws(jwt)
+							.getBody();
+		
+		
+		return claims;
 	}
 	
 	

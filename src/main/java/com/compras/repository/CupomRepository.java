@@ -8,4 +8,6 @@ import com.compras.model.Cupom;
 @Repository
 public interface CupomRepository extends JpaRepository<Cupom, Long>{
 
+//	List<Cupom> findAllCumulativoIsFalse();
+
 }
