@@ -1,4 +1,4 @@
-# Sitema de Compra Online
+# Sitemas de Compra Online
 
 Sistema de compras online baseado em REST API usando Java Spring, Spring Boot, Hibernate ORM com MySQL, Spring Fox (Swagger API docs) e JWT.
 
