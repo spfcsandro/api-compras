@@ -1,17 +1,20 @@
 package com.compras;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.compras.enums.ROLE;
+import com.compras.enums.Role;
 import com.compras.model.Usuario;
 import com.compras.repository.UsuarioRepository;
+import com.compras.util.AuthUtils;
+import com.compras.util.HashUtil;
+
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
+@EnableSwagger2
 public class ComprasApplication implements CommandLineRunner {
 	
 	@Autowired
@@ -27,9 +30,9 @@ public class ComprasApplication implements CommandLineRunner {
 		if(!usuarioRepository.findByEmail("spfcsandro@gmail.com").isPresent()) {		
 			Usuario usuario = new Usuario();
 			usuario.setNome("Sandro");
-			usuario.setSenha("123456");
+			usuario.setSenha(HashUtil.gerarHash("123456"));
 			usuario.setEmail("spfcsandro@gmail.com");
-			usuario.setRole(ROLE.ADMINISTRADOR);	
+			usuario.setRole(Role.ADMINISTRADOR);	
 			
 			usuarioRepository.save(usuario);
 		}

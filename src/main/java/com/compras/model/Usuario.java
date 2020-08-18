@@ -12,7 +12,7 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.compras.enums.ROLE;
+import com.compras.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -42,6 +42,6 @@ public class Usuario implements Serializable{
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String senha;
 	@Column(nullable = false)
-	private ROLE role;
+	private Role role;
 	
 }

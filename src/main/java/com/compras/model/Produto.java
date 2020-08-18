@@ -26,7 +26,7 @@ public class Produto implements Serializable{
 	private String codigo;
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String descricao;
-	private Double valor;
+	private Double valor = 0.0;
 	@ManyToOne
 	@JoinColumn(name = "id_categoria")
 	private Categoria categoria;

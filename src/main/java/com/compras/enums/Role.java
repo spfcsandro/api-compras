@@ -1,6 +1,6 @@
 package com.compras.enums;
 
-public enum ROLE {
+public enum Role {
 
 	ADMINISTRADOR,
 	CLIENTE

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,7 +24,8 @@ import org.springframework.stereotype.Service;
 import com.compras.config.JwtManager;
 import com.compras.dto.UsuarioClienteDTO;
 import com.compras.dto.UsuarioLoginResponseDTO;
-import com.compras.enums.ROLE;
+import com.compras.enums.Role;
+import com.compras.exception.NegocioException;
 import com.compras.exception.NotFoundException;
 import com.compras.model.Usuario;
 import com.compras.repository.UsuarioRepository;
@@ -38,6 +40,7 @@ public class UsuarioService implements UserDetailsService{
 	private final UsuarioRepository usuarioRepository;
 	private final AuthenticationManager authManager;
 	private final JwtManager jwtManager;
+	private final MessageSource messageSource;
 	
 	public Page<Usuario> listarUsuarios(Pageable pageable){
 		return usuarioRepository.findAll(pageable);
@@ -49,8 +52,17 @@ public class UsuarioService implements UserDetailsService{
 	}
 	
 	public Usuario salvarUsuario(Usuario usuario) {
+		validarUsuarioComMesmoCodigo(usuario);
 		usuario.setSenha(HashUtil.gerarHash(usuario.getSenha()));
 		return usuarioRepository.save(usuario);
+	}
+	
+	private void validarUsuarioComMesmoCodigo(Usuario usuario) {
+		Optional<Usuario> usuarioBanco = usuarioRepository.findByEmail(usuario.getEmail());
+		
+		if(usuarioBanco.isPresent()){
+			throw new NegocioException(messageSource.getMessage("negocio.validacao.email.existente", new Object[] {"'"+ usuario.getEmail() +"'"}, null));
+		}
 	}
 	
 	public Usuario atualizarUsuario(Usuario usuario) {
@@ -75,7 +87,7 @@ public class UsuarioService implements UserDetailsService{
 		usuario.setNome(usuarioClienteDTO.getNome());
 		usuario.setEmail(usuarioClienteDTO.getEmail());
 		usuario.setSenha(HashUtil.gerarHash(usuarioClienteDTO.getSenha()));
-		usuario.setRole(ROLE.CLIENTE);
+		usuario.setRole(Role.CLIENTE);
 		return usuario;
 	}
 
