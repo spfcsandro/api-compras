@@ -29,9 +29,9 @@ public class ComprasApplication implements CommandLineRunner {
 		
 		if(!usuarioRepository.findByEmail("spfcsandro@gmail.com").isPresent()) {		
 			Usuario usuario = new Usuario();
-			usuario.setNome("Sandro");
+			usuario.setNome("admin");
 			usuario.setSenha(HashUtil.gerarHash("123456"));
-			usuario.setEmail("spfcsandro@gmail.com");
+			usuario.setEmail("admin@gmail.com");
 			usuario.setRole(Role.ADMINISTRADOR);	
 			
 			usuarioRepository.save(usuario);
