@@ -11,7 +11,4 @@ import com.compras.model.Cupom;
 public interface CupomRepository extends JpaRepository<Cupom, Long>{
 
 	Optional<Cupom> findByCodigo(String codigo);
-
-//	List<Cupom> findAllCumulativoIsFalse();
-
 }

@@ -25,14 +25,17 @@ public class Cupom implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String codigo;
+	
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String descricao;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_desconto", nullable = false)
 	@NotNull(message = "{campo.validacao.vazio}")
 	private TipoDesconto tipoDesconto;
-//	private boolean isCumulativo;
+
 	private Double desconto;
 }

@@ -1,14 +1,13 @@
-package com.compras.config;
+package com.compras.service.security;
 
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
 import com.compras.util.HashUtil;
 
-@Configuration
-public class PasswordEncoderConfiguration implements PasswordEncoder{
+@Component
+public class PasswordEncoderService implements PasswordEncoder{
 
-	@Override
 	public String encode(CharSequence rawPassword) {
 		return HashUtil.gerarHash(rawPassword.toString());
 	}

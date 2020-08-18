@@ -1,4 +1,4 @@
-package com.compras.config;
+package com.compras.service.security;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -19,9 +19,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JwtManager {
 
 	public UsuarioLoginResponseDTO createToken(String email, List<String> roles) {
-		
-	/*	Date dateExp = Date.from(LocalDateTime.now()
-				 .atZone(ZoneId.systemDefault()).plusDays(SecurityConstant.JWT_EXP_DAYS).toInstant());*/
 		
 		Instant now = Instant.now();
 		Date dateExp = Date.from(now.plus(SecurityConstant.JWT_EXP_DAYS, ChronoUnit.DAYS));

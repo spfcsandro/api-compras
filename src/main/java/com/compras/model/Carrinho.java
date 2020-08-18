@@ -21,9 +21,11 @@ public class Carrinho implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario cliente;
+	
 	@Transient
 	private Double total = 0.0;
 }

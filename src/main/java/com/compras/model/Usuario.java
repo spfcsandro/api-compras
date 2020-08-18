@@ -29,18 +29,22 @@ public class Usuario implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@Column(nullable = false)
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	@Length(min=5, max=80, message = "{campo.validacao.tamanho}")
 	private String nome;
+	
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	@Email
 	@Column(unique = true)
 	private String email;
+	
 	@Getter(onMethod = @__({@JsonIgnore}))
 	@Setter(onMethod = @__({@JsonProperty}))
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String senha;
+	
 	@Column(nullable = false)
 	private Role role;
 	

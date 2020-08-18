@@ -15,6 +15,6 @@ public class CampoMensagem implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private String campo;
+	private String campoValidacao;
 	private String mensagem;
 }

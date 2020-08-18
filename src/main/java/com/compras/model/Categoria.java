@@ -26,14 +26,12 @@ public class Categoria implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String codigo;
+	
 	@NotEmpty(message = "{campo.validacao.vazio}")
 	private String descricao;
-	/*@JsonIgnore
-	@OneToMany(mappedBy = "categoria")
-	private List<Produto> produtos = new ArrayList<>();
-	 */
 	
 	@ManyToMany
 	@JoinTable(name = "categoria_cupom", 

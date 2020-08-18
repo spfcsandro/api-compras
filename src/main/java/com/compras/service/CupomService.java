@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.compras.exception.NegocioException;
+import com.compras.exception.NotFoundException;
 import com.compras.model.Cupom;
 import com.compras.repository.CupomRepository;
 
@@ -47,7 +48,7 @@ public class CupomService {
 	}
 	
 	public void deletarCupom(Long id) {
-		Optional<Cupom> cupom = cupomRepository.findById(id);
-		cupomRepository.delete(cupom.get());
+		Cupom cupom = cupomRepository.findById(id).orElseThrow(() -> new NotFoundException("Objeto não encontrado"));
+		cupomRepository.delete(cupom);
 	}
 }

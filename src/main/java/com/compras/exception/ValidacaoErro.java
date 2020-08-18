@@ -17,7 +17,7 @@ public class ValidacaoErro extends Erro{
 		return errors;
 	}
 
-	public void adicionarErro(String campo, String menssagem) {
-		errors.add(new CampoMensagem(campo, menssagem));
+	public void adicionarErro(String campoValidacao, String menssagem) {
+		errors.add(new CampoMensagem(campoValidacao, menssagem));
 	}
 }

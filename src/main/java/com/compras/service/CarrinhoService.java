@@ -37,17 +37,31 @@ public class CarrinhoService {
 	
 	public ItemCarrinho adicionarItemCarrinho(@Valid ItemCarrinho itemCarrinho) {
 		Carrinho carrinho = carregarCarrinhoPorUsuario();
+		carrinho = criaCarrinhoCasoNaoExista(carrinho);
+		seExistirOProdutoNoCarrinhoSomaAsQuantidades(itemCarrinho);
+			
+		itemCarrinho.setCarrinho(carrinho);
+		itemCarrinhoRepository.save(itemCarrinho);
 		
+		return itemCarrinho;
+	}
+
+	private void seExistirOProdutoNoCarrinhoSomaAsQuantidades(ItemCarrinho itemCarrinho) {
+		ItemCarrinho itemCarrinhoBanco = itemCarrinhoRepository.findByProdutoId(itemCarrinho.getProduto().getId());
+		if(!ObjectUtil.isObjectNull(itemCarrinhoBanco)) {
+			Integer novaQuantidade = itemCarrinhoBanco.getQuantidade() + itemCarrinho.getQuantidade();
+			itemCarrinho.setId(itemCarrinhoBanco.getId());
+			itemCarrinho.setQuantidade(novaQuantidade);
+		}
+	}
+
+	private Carrinho criaCarrinhoCasoNaoExista(Carrinho carrinho) {
 		if(ObjectUtil.isObjectNull(carrinho)) {
 			carrinho = new Carrinho();
 			carrinho.setCliente(usuarioRepository.findByEmail(AuthUtils.usuarioLogado()).get());
 			carrinhoRepository.save(carrinho);
 		}
-		
-		itemCarrinho.setCarrinho(carrinho);
-		itemCarrinhoRepository.save(itemCarrinho);
-		
-		return itemCarrinho;
+		return carrinho;
 	}
 	
 	public CarrinhoResumoDTO listarItemCarrinho() {
@@ -60,8 +74,6 @@ public class CarrinhoService {
 			aplicarDescontoCategoriaItem(itemCarrinho, carrinhoResumoDTO);
 			carrinhoResumoDTO.getItens().add(criarCarrinhoResumoItemDTO(itemCarrinho));
 		}
-		
-		//aplicarDescontoGlobal(carrinho, cuponsBanco);
 		return carrinhoResumoDTO;
 	}
 
@@ -92,7 +104,6 @@ public class CarrinhoService {
 				}else {
 					total -= cupom.getDesconto();
 				}
-				//carrinho.getCupons().add(cupom);
 			}
 			carrinho.setTotal(total);
 		}
@@ -130,8 +141,8 @@ public class CarrinhoService {
 
 	private Double somarETotalizarOsProdutosComDescontos(ItemCarrinho itemCarrinho, CarrinhoResumoDTO carrinhoResumoDTO,
 			Double total, Double valorDescontoCumulativo) {
-		itemCarrinho.setPreco(valorDoProdutoMenosOsDescontosCumulativos(itemCarrinho, valorDescontoCumulativo));
-		total += valorDoProdutoMenosOsDescontosCumulativos(itemCarrinho, valorDescontoCumulativo);
+		itemCarrinho.setPreco(itemCarrinho.getQuantidade() * valorDoProdutoMenosOsDescontosCumulativos(itemCarrinho, valorDescontoCumulativo));
+		total += itemCarrinho.getQuantidade() * valorDoProdutoMenosOsDescontosCumulativos(itemCarrinho, valorDescontoCumulativo);
 		carrinhoResumoDTO.setTotal(total);
 		return total;
 	}

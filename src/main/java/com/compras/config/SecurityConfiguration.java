@@ -17,6 +17,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import com.compras.filter.AuthorizationFilter;
 import com.compras.service.UsuarioService;
+import com.compras.service.security.PasswordEncoderService;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private UsuarioService usuarioService;
 	@Autowired
-	private PasswordEncoderConfiguration passwordEncoder;
+	private PasswordEncoderService passwordEncoder;
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {

@@ -77,7 +77,6 @@ public class UsuarioResource {
 	@PostMapping("/cadastrar-cliente")
 	public ResponseEntity<Usuario> cadastrarCliente(@Valid @RequestBody UsuarioClienteDTO usuario){
 		Usuario usuarioCadastrado = usuarioService.cadastrarCliente(usuario);
-		//carrinhoService.cadastrarCarrinhoCliente(usuarioCadastrado);
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioCadastrado);
 	}
 	

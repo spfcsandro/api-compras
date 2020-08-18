@@ -24,7 +24,7 @@ public class SwaggerDocumentacao {
 	@Bean
 	public Docket api() {
 		
-		//Adding header
+		//Adiciona o parâmetro Authorization no header
 		ParameterBuilder parameterBuilder = new ParameterBuilder();
 		parameterBuilder.name("Authorization").modelRef(new ModelRef("string")).parameterType("header").required(false);
 		List<Parameter> parameters = new ArrayList<Parameter>();

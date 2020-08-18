@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
+import javax.validation.constraints.Min;
 
 import lombok.Data;
 
@@ -30,6 +31,7 @@ public class ItemCarrinho implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "id_produto")
 	private Produto produto;
+	@Min(value = 1, message = "{campo.validacao.minimo.quantidade}")
 	private Integer quantidade;
 	private Double preco = 0.0;
 	@Transient

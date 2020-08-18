@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.compras.config.JwtManager;
 import com.compras.dto.UsuarioClienteDTO;
 import com.compras.dto.UsuarioLoginResponseDTO;
 import com.compras.enums.Role;
@@ -29,6 +28,7 @@ import com.compras.exception.NegocioException;
 import com.compras.exception.NotFoundException;
 import com.compras.model.Usuario;
 import com.compras.repository.UsuarioRepository;
+import com.compras.service.security.JwtManager;
 import com.compras.util.HashUtil;
 
 import lombok.RequiredArgsConstructor;

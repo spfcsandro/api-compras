@@ -22,9 +22,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.compras.config.JwtManager;
 import com.compras.constant.SecurityConstant;
 import com.compras.exception.Erro;
+import com.compras.service.security.JwtManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
